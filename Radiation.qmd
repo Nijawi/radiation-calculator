@@ -1,0 +1,37 @@
+---
+title: "Radiation Calculator"
+format: html
+---
+
+```{ojs}
+//| echo: false
+// import Observable inputs
+import {Inputs} from "@observablehq/inputs"
+
+// Load CSVs (placed in the same folder as this .qmd)
+elements = FileAttachment("elements.csv").csv({typed: true})
+locations = FileAttachment("locations.csv").csv({typed: true})
+ages = FileAttachment("ages.csv").csv({typed: true})
+genders = FileAttachment("genders.csv").csv({typed: true})
+
+// Dropdowns
+viewof element = Inputs.select(elements.map(d => d.element), {label: "Element"})
+viewof location = Inputs.select(locations.map(d => d.location), {label: "Location"})
+viewof age = Inputs.select(ages.map(d => d.age_group), {label: "Age Group"})
+viewof gender = Inputs.select(genders.map(d => d.gender), {label: "Gender"})
+
+// Button
+viewof calc = Inputs.button("Calculate")
+
+// Calculation logic
+calc_result = calc ? (
+  elements.find(d => d.element === element).radioactivity *
+  locations.find(d => d.location === location).background *
+  ages.find(d => d.age_group === age).limit *
+  genders.find(d => d.gender === gender).limit
+) : null
+
+html`<p>Select options and press Calculate.</p>`
+
+html`${calc ? `<p><b>Result:</b> ${calc_result}</p>` : "<p><b>Result:</b></p>"}`
+```
