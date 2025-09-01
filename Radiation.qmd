@@ -1,6 +1,8 @@
 ---
 title: "Radiation Calculator"
 format: html
+project:
+  output-dir: _site
 ---
 
 ```{ojs}
@@ -9,10 +11,10 @@ format: html
 import {Inputs} from "@observablehq/inputs"
 
 // Load CSVs (placed in the same folder as this .qmd)
-elements = FileAttachment("elements.csv").csv({typed: true})
-locations = FileAttachment("locations.csv").csv({typed: true})
-ages = FileAttachment("ages.csv").csv({typed: true})
-genders = FileAttachment("genders.csv").csv({typed: true})
+elements = FileAttachment("data/elements.csv").csv({typed: true})
+locations = FileAttachment("data/locations.csv").csv({typed: true})
+ages = FileAttachment("data/ages.csv").csv({typed: true})
+genders = FileAttachment("data/genders.csv").csv({typed: true})
 
 // Dropdowns
 viewof element = Inputs.select(elements.map(d => d.element), {label: "Element"})
